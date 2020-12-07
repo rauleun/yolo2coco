@@ -12,7 +12,7 @@ Object Detection annotation Convert from YOLO Darknet to COCO
 
 ## YOLO annotation format
 
-1. txt file format
+1. *txt* file format
 
 
 2. bbox annotation
@@ -20,9 +20,7 @@ Object Detection annotation Convert from YOLO Darknet to COCO
  <object-class> <x> <y> <width> <height>
 ```
 
-x and y indicate the center coordinates of bbox.
-
-values of x, y, width, and height are nomalized.
+<x> and <y> indicate the center coordinates of bbox. All values are nomalized by image's original width and height.
 
 &nbsp;
 &nbsp;
@@ -34,7 +32,7 @@ values of x, y, width, and height are nomalized.
 
 ## COCO annotation format
 
-1. json file format
+1. *json* file format
 
 
 2. bbox annotation
@@ -42,9 +40,7 @@ values of x, y, width, and height are nomalized.
 <x> <y> <width> <height>
 ```
 
-x and y indicate the top left coordinates of bbox.
-
-values are not normalized.
+<x> and <y> indicate the top left coordinates of bbox. All values are not normalized.
 
 &nbsp;
 &nbsp;
@@ -70,17 +66,17 @@ pip install -r requirements.txt
 
 ## Parameters
 
-1. base_path  
+1. *base_path*  
 Parameter 'base_path' indicates a path to the YOLO dataset folder. The dataset folder must include the '.txt file', '.names file', and the image folder. Txt file contains the absolute path of each image file. Names file contains the whole class categories. Data folder contains all the image and annotation files. Each image-annotation pair has the same filename except for the file format. ('png'/ 'txt')
 
 
-2. txt  
+2. *txt*  
 Parameter 'txt' indicates the filename of txt file. Txt file contains the absolute path of whole images.
 
-3. data_path  
+3. *data_path*  
 Parameter 'data_path' indicates the name of data folder. Data folder contains all the images(.png or .jpg) and the annotation files(.txt).
 
-4. cls_path  
+4. *cls_path*  
 Parameter 'cls_path' indicates the filename of names file. Names file contains the whole class categories. Below is the example of names file.
 
 **.names file example**
@@ -92,7 +88,7 @@ truck
 tree
 ```
 
-5. output_path  
+5. *output_path*  
 Parameter 'output_path' indicates the output folder name. The converted COCO format data will saved.
 
 
