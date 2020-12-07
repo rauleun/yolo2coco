@@ -6,7 +6,7 @@ file format : ".txt"
 
 contents : <object-class> <x> <y> <width> <height>
 
-x and y indicates the center coordinates of bbox.
+x and y indicate the center coordinates of bbox.
 
 values of x, y, width, and height are nomalized.
 
