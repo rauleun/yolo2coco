@@ -8,7 +8,7 @@ from datetime import date
 
 def get_args_parser():
     parser = argparse.ArgumentParser('Set conditions', add_help=False)
-    parser.add_argument('--path_base', default='/hd/hyunsung/data/gov-thermal/test-20201126/total', type=str)
+    parser.add_argument('--base_path', default='/hd/hyunsung/data/gov-thermal/test-20201126/total', type=str)
     parser.add_argument('--txt', default='train.txt', type=str)
     parser.add_argument('--data_path', default='obj_train_data', type=str)
     parser.add_argument('--output_path', default = 'output', type=str)
@@ -16,8 +16,8 @@ def get_args_parser():
     return parser
 
 def main(args):
-    path_base = args.path_base
-    path_txt = os.path.join(path_base, args.txt)
+    base_path = args.base_path
+    path_txt = os.path.join(base_path, args.txt)
     
     if not os.path.isdir(args.output_path):
         os.mkdir(args.output_path)
@@ -58,7 +58,7 @@ def main(args):
         json_img['id'] = img_count
         label_json['images'].append(json_img)
         
-        with open(os.path.join(path_base, args.data_path, image_path.split('/')[-1][:-3]+'txt')) as f_annt:
+        with open(os.path.join(base_path, args.data_path, image_path.split('/')[-1][:-3]+'txt')) as f_annt:
             while True:
                 line_annt = f_annt.readline()
                 if not line_annt: break
@@ -86,7 +86,7 @@ def main(args):
         img_count += 1
     
     label_json['categories'] = []
-    with open(os.path.join(path_base, args.cls_path)) as f_cls:
+    with open(os.path.join(base_path, args.cls_path)) as f_cls:
         cls_count = 0
         while True:
             line_cls = f_cls.readline()
