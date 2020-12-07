@@ -1,6 +1,9 @@
 import os
 import argparse
 import cv2
+import json
+from tqdm import tqdm
+import time
 from datetime import date
 
 def get_args_parser():
@@ -31,66 +34,73 @@ def main(args):
             image_list.append(line[:-1])
             annotation_list.append(line[:-4]+'txt')
 
-    json = {}
-    json['info'] = {'description':'YOLO Dataset', 'date created':date.today().isoformat()}
-    json['licenses'] = {'converted by':'github.com/rauleun/yolo2coco'}
-    json['images'] = []
-    json['annotations'] = []
+    label_json = {}
+    label_json['info'] = {'description':'YOLO Dataset', 'url':None, 'version':None, 'contributor':'rauleun', 'date created':date.today().isoformat()}
+    label_json['licenses'] = [{'url' : None, 'id':1, 'name':'github.com/rauleun/yolo2coco'}]
+    label_json['images'] = []
+    label_json['annotations'] = []
     
     img_count = 1
     annt_count = 1
     
-    for image_path in image_list:
+    for image_path in tqdm(image_list):
+        #time.sleep(0.1)
         json_img = {}
-        json_img['license'] = 0
+        json_img['license'] = 1
         json_img['file_name'] = image_path.split('/')[-1]
-        json_img['coco_url'] = ''
+        json_img['coco_url'] = None
         img = cv2.imread(image_path)
         height, width, _ = img.shape 
         json_img['height'] = height
         json_img['width'] = width
-        json_img['date_captured'] = ''
+        json_img['date_captured'] = None
+        json_img['flickr_url'] = None
         json_img['id'] = img_count
-        json['images'].append(json_img)
+        label_json['images'].append(json_img)
         
-        with open(os.path.join(path_base, args.data_path, image_path.split('/')[-1][:-4]+'.txt')) as f_annt:
+        with open(os.path.join(path_base, args.data_path, image_path.split('/')[-1][:-3]+'txt')) as f_annt:
             while True:
                 line_annt = f_annt.readline()
                 if not line_annt: break
 
                 annt_cls, annt_x, annt_y, annt_w, annt_h = line_annt.split()
-                annt_x = round(width * float(annt_x), 2)
-                annt_w = round(width * float(annt_w), 2)
-                annt_y = round(height * float(annt_y), 2)
-                annt_h = round(height * float(annt_h), 2)
+                annt_x = width * float(annt_x)
+                annt_w = width * float(annt_w)
+                annt_y = height * float(annt_y)
+                annt_h = height * float(annt_h)
                
                 json_annt = {}
                 json_annt['segmentation'] = None
-                json_annt['area'] = width * height
+                json_annt['area'] = annt_w * annt_h
                 json_annt['iscrowd'] = None
                 json_annt['image_id'] = img_count
-                json_annt['bbox'] = [annt_x - annt_w/2, annt_y-annt_h/2, annt_w, annt_h]
+                bbox = [annt_x - annt_w/2, annt_y-annt_h/2, annt_w, annt_h]
+                if((bbox[0] < 0) or (bbox[1]<0)):
+                    bbox[0] = max(0, bbox[0])
+                    bbox[1] = max(0, bbox[1])
+                json_annt['bbox'] = bbox
                 json_annt['category_id'] = annt_cls
                 json_annt['id'] = annt_count
-                json['annotations'].append(json_annt)
+                label_json['annotations'].append(json_annt)
                 annt_count += 1
         img_count += 1
-        if img_count%100==0:
-            print(f"Finished {img_count}th Image")
-    json['categories'] = []
-    with open(os.path.join(path_base, arg.cls_path)) as f_cls:
+    
+    label_json['categories'] = []
+    with open(os.path.join(path_base, args.cls_path)) as f_cls:
         cls_count = 0
         while True:
             line_cls = f_cls.readline()
             if not line_cls: break
-            cls = line_cls
+            cls = line_cls[:-1]
             cls_annt = {}
             cls_annt['supercategory'] = cls
             cls_annt['id'] = cls_count
             cls_annt['name'] = cls
-            json['categories'].append(cls_annt)
+            label_json['categories'].append(cls_annt)
             cls_count += 1
-
+    
+    with open(os.path.join(args.output_path, 'annotations', 'label.json'), "w+") as json_file:
+        json.dump(label_json, json_file, indent=4)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('Conversion script', parents = [get_args_parser()])
