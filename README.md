@@ -10,7 +10,7 @@ Object Detection annotation Convert from YOLO Darknet to COCO
 
 
 
-### YOLO annotation format
+## YOLO annotation format
 
 1. txt file format
 
@@ -32,7 +32,7 @@ values of x, y, width, and height are nomalized.
 
 
 
-### COCO annotation format
+## COCO annotation format
 
 1. json file format
 
@@ -54,7 +54,7 @@ values are not normalized.
 
 
 
-### Requirements
+## Requirements
 
 ```
 pip install -r requirements.txt
@@ -68,21 +68,15 @@ pip install -r requirements.txt
 &nbsp;
 
 
-### Parameters
+## Parameters
 
 1. base_path 
 - Path to YOLO dataset folder
 - The folder must include .txt file, .names file, and image folder (2, 3, 4)
-```
---base_path /YOLO_dataset
-```
 
 
 2. txt
 - .txt file with path of images inside
-```
---txt train.txt
-```
 
 
 3. data_path
