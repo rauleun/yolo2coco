@@ -71,20 +71,17 @@ pip install -r requirements.txt
 ## Parameters
 
 1. base_path 
-- Path to YOLO dataset folder
-- The folder must include .txt file, .names file, and image folder (2, 3, 4)
+Parameter 'base_path' indicates a path to the YOLO dataset folder. The dataset folder must include the '.txt file', '.names file', and the image folder. Txt file contains the absolute path of each image file. Names file contains the whole class categories. Data folder contains all the image and annotation files. Each image-annotation pair has the same filename except for the file format. ('png'/ 'txt')
 
 
 2. txt
-- .txt file with path of images inside
-
+Parameter 'txt' indicates the filename of txt file. Txt file contains the absolute path of whole images.
 
 3. data_path
-- Name of the image folder
+Parameter 'data_path' indicates the name of data folder. Data folder contains all the images(.png or .jpg) and the annotation files(.txt).
 
 4. cls_path
-- Name of the .names file
-- .names file includes category names
+Parameter 'cls_path' indicates the filename of names file. Names file contains the whole class categories. Below is the example of names file.
 
 **.names file example**
 ```
@@ -98,6 +95,8 @@ tree
 5. output_path
 - Name of the output folder
 
+
+## Example
 ```
 python yolo2coco.py --base_path /YOLO_dataset --txt train.txt --data_path images --cls_path obj.names --output_path coco_output
 ```
