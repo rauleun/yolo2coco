@@ -71,13 +71,13 @@ Parameter 'base_path' indicates a path to the YOLO dataset folder. The dataset f
 
 
 2. *txt*  
-Parameter 'txt' indicates the filename of txt file. Txt file contains the absolute path of whole images.
+Parameter *'txt'* indicates the filename of txt file. Txt file contains the absolute path of whole images.
 
 3. *data_path*  
-Parameter 'data_path' indicates the name of data folder. Data folder contains all the images(.png or .jpg) and the annotation files(.txt).
+Parameter *'data_path'* indicates the name of data folder. Data folder contains all the images(.png or .jpg) and the annotation files(.txt).
 
 4. *cls_path*  
-Parameter 'cls_path' indicates the filename of names file. Names file contains the whole class categories. Below is the example of names file.
+Parameter *'cls_path'* indicates the filename of names file. Names file contains the whole class categories. Below is the example of names file.
 
 **.names file example**
 ```
@@ -89,7 +89,7 @@ tree
 ```
 
 5. *output_path*  
-Parameter 'output_path' indicates the output folder name. The converted COCO format data will saved.
+Parameter *'output_path'* indicates the output folder name. The converted COCO format data will saved.
 
 
 ## Example
