@@ -12,7 +12,7 @@ def get_args_parser():
     parser.add_argument('--txt', default='train.txt', type=str)
     parser.add_argument('--data_path', default='obj_train_data', type=str)
     parser.add_argument('--output_path', default = 'output', type=str)
-    parser.add_argument('--cls_path', default = 'obj.names', type=str)
+    parser.add_argument('--cls', default = 'obj.names', type=str)
     return parser
 
 def main(args):
@@ -86,7 +86,7 @@ def main(args):
         img_count += 1
     
     label_json['categories'] = []
-    with open(os.path.join(base_path, args.cls_path)) as f_cls:
+    with open(os.path.join(base_path, args.cls)) as f_cls:
         cls_count = 0
         while True:
             line_cls = f_cls.readline()

@@ -76,8 +76,8 @@ Parameter *'txt'* indicates the filename of txt file. Txt file contains the abso
 - *data_path*  
 Parameter *'data_path'* indicates the name of data folder. Data folder contains all the images(.png or .jpg) and the annotation files(.txt).
 
-- *cls_path*  
-Parameter *'cls_path'* indicates the filename of names file. Names file contains the whole class categories. Below is the example of names file.
+- *cls*  
+Parameter *'cls'* indicates the filename of names file. Names file contains the whole class categories. Below is the example of names file.
 
 **.names file example**
 ```
@@ -94,5 +94,5 @@ Parameter *'output_path'* indicates the output folder name. The converted COCO f
 
 ## Example
 ```
-python yolo2coco.py --base_path /YOLO_dataset --txt train.txt --data_path images --cls_path obj.names --output_path coco_output
+python yolo2coco.py --base_path /YOLO_dataset --txt train.txt --data_path images --cls obj.names --output_path coco_output
 ```
