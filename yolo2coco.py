@@ -2,8 +2,10 @@ import os
 import argparse
 import cv2
 import json
-from tqdm import tqdm
 import time
+import math
+
+from tqdm import tqdm
 from datetime import date
 
 def get_args_parser():
@@ -72,12 +74,13 @@ def main(args):
                 json_annt = {}
                 json_annt['segmentation'] = None
                 json_annt['area'] = annt_w * annt_h
-                json_annt['iscrowd'] = None
+                json_annt['iscrowd'] = 0 
                 json_annt['image_id'] = img_count
                 bbox = [annt_x - annt_w/2, annt_y-annt_h/2, annt_w, annt_h]
                 if((bbox[0] < 0) or (bbox[1]<0)):
                     bbox[0] = max(0, bbox[0])
                     bbox[1] = max(0, bbox[1])
+                bbox = [math.floor(bbox[0]), math.floor(bbox[1]), math.floor(bbox[2]), math.floor(bbox[3])]
                 json_annt['bbox'] = bbox
                 json_annt['category_id'] = annt_cls
                 json_annt['id'] = annt_count
